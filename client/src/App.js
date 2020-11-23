@@ -7,12 +7,17 @@ import { useAuth } from './hooks/auth.hook';
 import { AuthContext } from './context/auth.context';
 
 import { Navbar } from './components/Navbar';
+import { Loader } from './components/Loader';
 
 function App() {
-  const { signin, signout, token, userId } = useAuth();
+  const { signin, signout, token, userId, ready } = useAuth();
   const isAuth = !!token;
 
   const routes = useRoutes(isAuth);
+
+  if (!ready) {
+    return <Loader />
+  }
 
   return (
     <AuthContext.Provider value={{ signin, signout, token, userId, isAuth }}>
